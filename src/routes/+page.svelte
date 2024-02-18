@@ -178,7 +178,7 @@
 		width: 145%;
 		height: 0;
 		padding-bottom: 145%;
-		background-image: url('space-bg-2.jpg');
+		background-image: url('/space-bg-2.jpg');
 		background-size: 2736px 1824px;
 		background-position: var(--xPos) var(--yPos);
 		z-index: -5;
