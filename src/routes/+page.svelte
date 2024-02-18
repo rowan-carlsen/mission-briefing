@@ -5,13 +5,12 @@
 
 	gsap.registerPlugin(TextPlugin);
 
-	const planetImage = './planets/mission-1.png';
+	const planetImage = './planets/mission-1.png',
+		timeline = gsap.timeline();
 	let xPos = 0,
 		yPos = 0,
 		rotation = 0,
-		ready = false,
-		header,
-		scan;
+		ready = false;
 	onMount(() => {
 		xPos = Math.random() * 100;
 		yPos = Math.random() * 100;
@@ -19,38 +18,79 @@
 		document.fonts.ready.then(() => (ready = true));
 	});
 	$: if (ready) {
-		gsap.to(header, {
+		timeline.to('#scan', {
+			clipPath: 'inset(0 0% 0 0)',
+			duration: 0.75,
+			ease: 'linear'
+		});
+		timeline.to('#scan', {
+			opacity: 0,
+			repeat: 4,
+			duration: 0.5,
+			ease: 'linear',
+			yoyo: true
+		});
+		timeline.to(
+			'#visual',
+			{
+				duration: 0.5,
+				opacity: 1
+			},
+			'>-.75'
+		);
+		timeline.to('#header', {
 			duration: 2,
 			text: {
 				value: 'MISSION BRIEFING',
 				newClass: 'visible'
-			}
+			},
+			ease: 'linear'
+		});
+		timeline.fromTo(
+			'#briefing',
+			{
+				gridTemplateColumns: '1fr 0'
+			},
+			{
+				gridTemplateColumns: '1fr 30rem'
+			},
+			'>+.5'
+		);
+		timeline.to('#briefing-text', {
+			opacity: 1
 		});
 	}
 </script>
 
 <main class:visible={ready}>
-	<h1 bind:this={header}>MISSION BRIEFING</h1>
+	<h1 id="header">MISSION BRIEFING</h1>
 	<section id="briefing">
 		<div id="viewscreen" style="--xPos: {xPos}%; --yPos: {yPos}%; --rotation: {rotation}deg;">
-			<img src={planetImage} alt="" id="planet" />
-			<div bind:this={scan} id="scan"></div>
+			<div id="visual"><img src={planetImage} alt="" width="512" height="512" /></div>
+			<div id="scan"></div>
 		</div>
 		<div id="briefing-text">
+			<h2>LOCATION: PLANET ERIA, BRAGA SYSTEM</h2>
 			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Et autem, fugiat, aliquam impedit
-				nemo dolore quae optio ipsum culpa dignissimos, veritatis soluta corporis totam ea eveniet.
-				Amet esse inventore vel? Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
-				nesciunt reprehenderit, esse expedita distinctio, aut animi dolorem officiis enim, maxime
-				eos corporis quas quasi neque delectus ea dignissimos natus. Velit!
+				Eria is a lush and temperate world, settled some 1500 years ago. It is one of two inhabited
+				planets in this system - its sister world, Ralos, is primarily arid and rocky. Eria and
+				Ralos have a complex, intertwined history defined by periods of intense conflict followed by
+				uneasy peace agreements. Shortly after the nearby Laos blinkgate finished construction, Eria
+				petitioned Union for Core status, a process which can take years.
 			</p>
 			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus maiores quod, in
-				dignissimos laboriosam voluptas praesentium molestias ratione non voluptatum repellat ad ab
-				nobis illum harum doloribus debitis quidem tenetur! Lorem ipsum dolor sit amet, consectetur
-				adipisicing elit. Distinctio eos dolores delectus nostrum sequi maiores corporis animi,
-				atque aperiam praesentium aliquam facilis itaque dolorum fuga, quas cumque? Libero,
-				perferendis quae.
+				Now that the approval for Eria's inclusion in the Core seems imminent, Ralos has made a
+				move. Under the leadership of Imperador Zarat, who has swiftly unified the planet under
+				military rule, Ralos launched a massive assault on the major population centers of Eria.
+				Zarat's aim seems to be to seize power before Union can establish a significant presence in
+				the system.
+			</p>
+			<p>
+				While the situation is fraught, Union did foresee this possibility, and a tactical strike
+				force was dispatched to the Braga system weeks ago. As the spearhead of this operation, your
+				squad must make contact with Zarat's largest force on Eria and eliminate their long-range
+				communications. The resulting chaos will allow our strike force to divide and conquer so as
+				to minimize further civilian casualties.
 			</p>
 		</div>
 	</section>
@@ -96,29 +136,22 @@
 	#briefing {
 		display: grid;
 		grid-template-columns: 1fr 0rem;
+		align-items: start;
 		margin: 0 0.5em;
-		animation: slide-text 1s 0.5s forwards;
 		overflow: hidden;
+		height: 600px;
 	}
-	@keyframes slide-text {
-		to {
-			grid-template-columns: 1fr 20rem;
-		}
-	}
+
 	#briefing-text {
 		padding: 0.5em;
 		border: 2px solid white;
 		overflow: auto;
-		width: 20rem;
-		animation: fade-in 0.75s 1.5s forwards;
+		width: 30rem;
 		opacity: 0;
+		max-height: 100%;
+		overflow: auto;
 	}
-	@keyframes fade-in {
-		to {
-			opacity: 1;
-		}
-	}
-	#briefing-text p:first-child {
+	#briefing-text h2 {
 		margin-top: 0;
 	}
 	#viewscreen {
@@ -128,8 +161,14 @@
 		height: 600px;
 		position: relative;
 		overflow: hidden;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
-	#viewscreen::before {
+	#visual {
+		opacity: 0;
+	}
+	#visual::before {
 		content: '';
 		position: absolute;
 		top: 50%;
@@ -159,10 +198,6 @@
 			),
 			repeating-linear-gradient(to right, transparent, transparent 48px, #16f529 48px, #16f529 50px);
 		z-index: 10;
-	}
-	#planet {
-		position: absolute;
-		inset: 0;
-		margin: auto;
+		clip-path: inset(0 100% 0 0);
 	}
 </style>
