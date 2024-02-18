@@ -135,11 +135,12 @@
 	}
 	#briefing {
 		display: grid;
+		gap: 10px;
 		grid-template-columns: 1fr 0rem;
 		align-items: start;
 		margin: 0 0.5em;
-		overflow: hidden;
-		height: 600px;
+		overflow-x: clip;
+		overflow-y: auto;
 	}
 
 	#briefing-text {
@@ -157,8 +158,9 @@
 	#viewscreen {
 		border: 2px solid white;
 		margin: 0 auto;
-		width: 800px;
-		height: 600px;
+		width: 100%;
+		max-width: 800px;
+		aspect-ratio: 1.33;
 		position: relative;
 		overflow: hidden;
 		display: flex;
@@ -167,6 +169,15 @@
 	}
 	#visual {
 		opacity: 0;
+		width: 64%;
+		max-width: 512px;
+		min-width: 128px;
+		max-height: 512px;
+	}
+	#visual img {
+		width: 100%;
+		height: 100%;
+		min-width: 0;
 	}
 	#visual::before {
 		content: '';
@@ -179,7 +190,7 @@
 		height: 0;
 		padding-bottom: 145%;
 		background-image: url('/space-bg-2.jpg');
-		background-size: 2736px 1824px;
+		background-size: 235% 211%;
 		background-position: var(--xPos) var(--yPos);
 		z-index: -5;
 		transform: rotate(var(--rotation));
@@ -199,5 +210,14 @@
 			repeating-linear-gradient(to right, transparent, transparent 48px, #16f529 48px, #16f529 50px);
 		z-index: 10;
 		clip-path: inset(0 100% 0 0);
+	}
+	@media (max-width: 1000px) {
+		#briefing {
+			display: block;
+		}
+		#briefing-text {
+			width: 90%;
+			margin: 1em auto 0 auto;
+		}
 	}
 </style>
