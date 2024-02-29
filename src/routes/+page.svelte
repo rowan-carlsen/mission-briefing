@@ -4,17 +4,50 @@
 	import { TextPlugin } from 'gsap/TextPlugin';
 
 	gsap.registerPlugin(TextPlugin);
-
-	const planetImage = './planets/mission-1.png',
-		timeline = gsap.timeline();
-	let xPos = 0,
+	let mission = 1,
+		xPos = 0,
 		yPos = 0,
 		rotation = 0,
 		ready = false;
+	const planetImage = `./planets/mission-${mission}.png`,
+		timeline = gsap.timeline(),
+		randomValues = [
+			[69, 77, 53],
+			[88, 64, 87],
+			[11, 92, 59],
+			[53, 43, 50],
+			[84, 43, 3],
+			[69, 51, 92],
+			[5, 74, 98],
+			[60, 96, 4],
+			[52, 56, 36],
+			[41, 11, 17],
+			[35, 7, 44],
+			[90, 84, 24],
+			[4, 55, 33],
+			[88, 23, 88],
+			[74, 62, 14],
+			[47, 77, 74],
+			[79, 18, 2],
+			[8, 82, 54],
+			[26, 73, 76],
+			[38, 53, 62],
+			[47, 27, 78],
+			[12, 66, 49],
+			[23, 33, 35],
+			[36, 85, 26],
+			[13, 15, 78],
+			[4, 0, 49],
+			[95, 20, 61],
+			[30, 94, 61],
+			[92, 59, 92],
+			[90, 95, 10]
+		];
+
 	onMount(() => {
-		xPos = Math.random() * 100;
-		yPos = Math.random() * 100;
-		rotation = Math.random() * 360;
+		xPos = randomValues[mission - 1][0];
+		yPos = randomValues[mission - 1][1];
+		rotation = randomValues[mission - 1][2] * 3.6;
 		document.fonts.ready.then(() => (ready = true));
 	});
 	$: if (ready) {
