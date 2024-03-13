@@ -153,6 +153,7 @@
 		color: transparent;
 		color: white;
 		min-height: 1.5em;
+		margin-top: 0;
 	}
 
 	main {

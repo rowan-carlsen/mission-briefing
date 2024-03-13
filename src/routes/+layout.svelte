@@ -15,6 +15,8 @@
 		display: flex;
 		list-style-type: none;
 		gap: 1em;
+		padding: 0.5em 1em;
+		margin: 0;
 	}
 	a {
 		text-decoration: none;
