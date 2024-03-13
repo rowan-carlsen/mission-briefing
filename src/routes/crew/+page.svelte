@@ -1,82 +1,104 @@
 <script>
-	//content
+	import { onMount } from 'svelte';
+	import { gsap } from 'gsap';
+	const players = [
+		{
+			name: 'Ysaj Oxameter',
+			callsign: 'GEODE',
+			mech: 'The Least of Your Problems',
+			image: '/players/NoiseIsFolk.png'
+		},
+		{
+			name: 'Marissa Galanche',
+			callsign: 'BOCCHI',
+			mech: 'Paranoia',
+			image: '/players/Bocchi_the_sniper.png'
+		},
+		{
+			name: 'Kaliya Azad',
+			callsign: 'MIST',
+			mech: 'Lucky You',
+			image: '/players/q-v2.png'
+		},
+		{
+			name: 'Shrimp Kaiju',
+			callsign: 'CHUM',
+			mech: 'Crawdaddy',
+			image: ''
+		}
+	];
+	onMount(() => {
+		gsap.from('img', { y: -200, delay: 0.6, stagger: 0.4, opacity: 0, ease: 'power3' });
+		gsap.from('.placeholder', { opacity: 0, ease: 'power3', delay: 1.8 });
+	});
 </script>
 
 <main>
 	<ul class="outer">
-		<li>
-			<div
-				style="width:100%; aspect-ratio:1; color:white; display:flex;
-            align-items:center; text-align:center; justify-content:center;font-size:min(4vw, 2em);"
-			>
-				NO VISUAL DATA
-			</div>
-			<!-- <img width="200" height="200" src="/players/guy.png" alt="NO VISUAL DATA" /> -->
-			<ul class="inner">
-				<li>Shrimp Kaiju</li>
-				<li>CALLSIGN: CHUM</li>
-				<li>MECH: Crawdaddy</li>
-			</ul>
-		</li>
-		<li>
-			<img width="200" height="200" src="/players/NoiseIsFolk.png" alt="" />
-			<ul class="inner">
-				<li>Ysaj Oxameter</li>
-				<li>CALLSIGN: GEODE</li>
-				<li>MECH: The Least of Your Problems</li>
-			</ul>
-		</li>
-		<li>
-			<img width="200" height="200" src="/players/Bocchi_the_sniper.png" alt="" />
-			<ul class="inner">
-				<li>Marissa Galanche</li>
-				<li>CALLSIGN: BOCCHI</li>
-				<li>MECH: Paranoia</li>
-			</ul>
-		</li>
-		<li>
-			<img width="200" height="200" src="/players/q-v2.png" alt="" />
-			<ul class="inner">
-				<li>Kaliya Azad</li>
-				<li>CALLSIGN: MIST</li>
-				<li>MECH: Lucky You</li>
-			</ul>
-		</li>
+		{#each players as { name, callsign, mech, image }, i}
+			<li>
+				{#if image.length}
+					<img width="200" height="200" src={image} alt="" />
+				{:else}
+					<div class="placeholder">NO VISUAL DATA</div>
+				{/if}
+				<ul class="inner">
+					<li>{name}</li>
+					<li>CALLSIGN: {callsign}</li>
+					<li>MECH: {mech}</li>
+				</ul>
+			</li>
+		{/each}
 	</ul>
 </main>
 
 <style>
 	.outer {
-		display: flex;
-		justify-content: space-between;
-		gap: 5%;
+		display: grid;
+		gap: 1em 5%;
+		grid-template-rows: repeat(4, auto);
+		grid-auto-columns: 1fr;
+		grid-auto-flow: column;
 		list-style-type: none;
 	}
 	.outer > li {
-		width: 25%;
-		display: flex;
-		flex-flow: column;
-		gap: 2em;
+		display: contents;
+		list-style-type: none;
 	}
 	.inner {
-		padding: 0 1em;
-		text-align: left;
-		line-height: 1.5;
-		font-size: 1.2em;
-		list-style-type: none;
+		display: contents;
 	}
 	.inner li {
 		width: 100%;
+		list-style-type: none;
+		font-size: 1.2em;
+	}
+	.inner li ~ li {
+		font-family: 'Courier New', Courier, monospace;
+		font-weight: bold;
 	}
 	.inner li:first-child {
 		text-align: center;
 		margin-bottom: 1em;
-		font-size: 1.1em;
+		font-size: 1.4em;
 		font-weight: bold;
 	}
 	img {
 		width: 100%;
 		height: auto;
+	}
+	.placeholder {
 		color: white;
+		font-size: min(4vw, 2em);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		aspect-ratio: 1;
+		font-weight: bold;
+	}
+	@media (max-width: 800px) {
+		:global(html) {
+			font-size: 0.8rem;
+		}
 	}
 </style>
