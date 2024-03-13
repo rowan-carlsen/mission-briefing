@@ -45,9 +45,9 @@
 		];
 
 	onMount(() => {
-		xPos = randomValues[mission - 1][0];
-		yPos = randomValues[mission - 1][1];
-		rotation = randomValues[mission - 1][2] * 3.6;
+		const randArray = randomValues[mission - 1];
+		randArray[2] *= 3.6;
+		[xPos, yPos, rotation] = randArray;
 		document.fonts.ready.then(() => (ready = true));
 	});
 	$: if (ready) {
@@ -74,8 +74,7 @@
 		timeline.to('#header', {
 			duration: 2,
 			text: {
-				value: 'MISSION BRIEFING',
-				newClass: 'visible'
+				value: 'MISSION BRIEFING'
 			},
 			ease: 'linear'
 		});
@@ -96,7 +95,7 @@
 </script>
 
 <main class:visible={ready}>
-	<h1 id="header">MISSION BRIEFING</h1>
+	<h1 id="header">&nbsp;</h1>
 	<section id="briefing">
 		<div id="viewscreen" style="--xPos: {xPos}%; --yPos: {yPos}%; --rotation: {rotation}deg;">
 			<div id="visual"><img src={planetImage} alt="" width="512" height="512" /></div>
@@ -152,10 +151,10 @@
 	h1 {
 		text-align: center;
 		color: transparent;
-	}
-	:global(h1 .visible) {
 		color: white;
+		min-height: 1.5em;
 	}
+
 	main {
 		visibility: hidden;
 	}
