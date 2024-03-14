@@ -6,19 +6,19 @@
 			name: 'Ysaj Oxameter',
 			callsign: 'GEODE',
 			mech: 'The Least of Your Problems',
-			image: '../players/NoiseIsFolk.png'
+			image: './players/NoiseIsFolk.png'
 		},
 		{
 			name: 'Marissa Galanche',
 			callsign: 'BOCCHI',
 			mech: 'Paranoia',
-			image: '../players/Bocchi_the_sniper.png'
+			image: './players/Bocchi_the_sniper.png'
 		},
 		{
 			name: 'Kaliya Azad',
 			callsign: 'MIST',
 			mech: 'Lucky You',
-			image: '../players/q-v2.png'
+			image: './players/q-v2.png'
 		},
 		{
 			name: 'Shrimp Kaiju',
