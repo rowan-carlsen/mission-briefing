@@ -28,8 +28,8 @@
 		}
 	];
 	onMount(() => {
-		gsap.from('img', { y: -200, delay: 0.6, stagger: 0.4, opacity: 0, ease: 'power3' });
-		gsap.from('.placeholder', { opacity: 0, ease: 'power3', delay: 1.8 });
+		gsap.to('img', { y: 0, delay: 0.6, stagger: 0.4, opacity: 1, ease: 'power3' });
+		gsap.to('.placeholder', { opacity: 1, ease: 'power3', delay: 1.8 });
 	});
 </script>
 
@@ -86,6 +86,7 @@
 	img {
 		width: 100%;
 		height: auto;
+		transform: translateY(-200px);
 	}
 	.placeholder {
 		color: white;
@@ -95,6 +96,10 @@
 		align-items: center;
 		aspect-ratio: 1;
 		font-weight: bold;
+	}
+	img,
+	.placeholder {
+		opacity: 0;
 	}
 	@media (max-width: 800px) {
 		:global(html) {
