@@ -2,50 +2,22 @@
 	import { onMount } from 'svelte';
 	import { gsap } from 'gsap';
 	import { TextPlugin } from 'gsap/TextPlugin';
+	import missionData from '$lib/mission-data.js';
+	const { randomValues, ...missions } = missionData;
 
 	gsap.registerPlugin(TextPlugin);
-	let mission = 1,
+	let selectedMission = 'Mission 1',
 		xPos = 0,
 		yPos = 0,
 		rotation = 0,
-		ready = false;
-	const planetImage = `./planets/mission-${mission}.png`,
-		timeline = gsap.timeline(),
-		randomValues = [
-			[69, 77, 53],
-			[88, 64, 87],
-			[11, 92, 59],
-			[53, 43, 50],
-			[84, 43, 3],
-			[69, 51, 92],
-			[5, 74, 98],
-			[60, 96, 4],
-			[52, 56, 36],
-			[41, 11, 17],
-			[35, 7, 44],
-			[90, 84, 24],
-			[4, 55, 33],
-			[88, 23, 88],
-			[74, 62, 14],
-			[47, 77, 74],
-			[79, 18, 2],
-			[8, 82, 54],
-			[26, 73, 76],
-			[38, 53, 62],
-			[47, 27, 78],
-			[12, 66, 49],
-			[23, 33, 35],
-			[36, 85, 26],
-			[13, 15, 78],
-			[4, 0, 49],
-			[95, 20, 61],
-			[30, 94, 61],
-			[92, 59, 92],
-			[90, 95, 10]
-		];
+		ready = false,
+		{ isPlanet } = missionData[selectedMission],
+		missionNumber = parseInt(selectedMission.split(' ')[1]),
+		planetImage = `./${isPlanet ? 'planets' : 'locations'}/mission-${missionNumber}.png`;
 
+	const timeline = gsap.timeline();
 	onMount(() => {
-		const randArray = randomValues[mission - 1];
+		const randArray = randomValues[missionNumber - 1];
 		randArray[2] *= 3.6;
 		[xPos, yPos, rotation] = randArray;
 		document.fonts.ready.then(() => (ready = true));
@@ -95,6 +67,10 @@
 </script>
 
 <main class:visible={ready}>
+	<select bind:value={selectedMission}>
+		<option value="Mission 1">Mission 1</option>
+	</select>
+	<!-- svelte-ignore a11y_missing_content -->
 	<h1 id="header">&nbsp;</h1>
 	<section id="briefing">
 		<div id="viewscreen" style="--xPos: {xPos}%; --yPos: {yPos}%; --rotation: {rotation}deg;">
