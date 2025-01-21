@@ -1,11 +1,11 @@
 <script>
-	//content
+	import { base } from '$app/paths';
 </script>
 
 <nav>
 	<ul>
-		<li><a href="/">MISSION</a></li>
-		<li><a href="/crew">CREW</a></li>
+		<li><a href={`${base}/`}>MISSION</a></li>
+		<li><a href={`${base}/crew`}>CREW</a></li>
 	</ul>
 </nav>
 <slot />
